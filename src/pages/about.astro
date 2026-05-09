@@ -1,0 +1,55 @@
+---
+import { getEntry, render } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import TOC from "@/components/TOC.astro";
+import { Icon } from "astro-icon/components";
+
+const page = await getEntry("pages","about")
+
+if (!page) {
+    throw Error("404")
+}
+
+const { Content, headings } = await render(page)
+---
+
+<Layout title={page.data.title} description={page.data.description}>
+    <section class="flex flex-col space-y-8 py-8">
+        <a
+            href="/"
+            class="flex w-fit flex-row items-center gap-2 text-lg text-orange-500"
+        >
+            <Icon name="tabler:home" />
+            ホームに戻る
+        </a>
+        <div
+            class="flex flex-col items-center justify-center space-y-4 rounded-xl border border-zinc-200 p-8 py-16 text-center shadow-xl shadow-zinc-200"
+        >
+            <h1 class="text-4xl font-bold">{page.data.title}</h1>
+            <p class="text-lg font-medium text-zinc-700">
+                {page.data.description}
+            </p>
+        </div>
+    </section>
+    <section class="py-8">
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
+            <div class="prose prose-orange min-w-full md:col-span-8">
+                <Content />
+            </div>
+            <div class="hidden md:col-span-4 md:block">
+                <div class="sticky top-24 block p-8 border border-zinc-200 rounded-xl shadow-xl shadow-zinc-200">
+                    <TOC headings={headings} />
+                </div>
+            </div>
+        </div>
+    </section>
+</Layout>
+
+<script>
+    import mediumZoom from 'medium-zoom';
+    const images = Array.from(document.querySelectorAll('.prose img'))
+        .filter(img => !img.closest('.remark-link-card-plus__container'));
+    mediumZoom(images, {
+        background: 'rgba(255, 255, 255, 0.9)',
+    });
+</script>

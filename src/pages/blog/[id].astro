@@ -1,0 +1,78 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import TOC from "@/components/TOC.astro";
+import PrevNextCard from "@/components/PrevNextCard.astro";
+import { getPosts, getPrevNextById } from "@/utils/content";
+import { Icon } from "astro-icon/components";
+import { render } from "astro:content";
+
+export async function getStaticPaths() {
+    const posts = await getPosts();
+    return posts.map((post) => ({
+        params: { id: post.id },
+        props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+const posts = await getPosts();
+const { prev, next } = getPrevNextById(posts, post.id);
+const { Content, headings } = await render(post);
+---
+
+<Layout title={post.data.title} description={post.data.description} ogType="article">
+    <section class="flex flex-col space-y-8 py-8">
+        <a
+            href="/"
+            class="flex w-fit flex-row items-center gap-2 text-lg text-orange-500"
+        >
+            <Icon name="tabler:home" />
+            ホームに戻る
+        </a>
+        <div
+            class="flex flex-col items-center justify-center space-y-4 rounded-xl border border-zinc-200 p-6 py-12 md:p-8 md:py-16 text-center shadow-xl shadow-zinc-200"
+        >
+            <p class="text-xs md:text-sm text-zinc-500">
+                {
+                    post.data.date.toLocaleDateString("ja-jp", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                    })
+                }
+            </p>
+            <p class="text-4xl md:text-5xl">{post.data.emoji}</p>
+            <h1 class="text-2xl md:text-4xl font-bold">{post.data.title}</h1>
+            <p class="text-base md:text-lg font-medium text-zinc-700">
+                {post.data.description}
+            </p>
+        </div>
+    </section>
+    <section class="py-8">
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
+            <div class="prose prose-orange min-w-full md:col-span-8">
+                <Content />
+            </div>
+            <div class="hidden md:col-span-4 md:block">
+                <div class="sticky top-24 block p-8 border border-zinc-200 rounded-xl shadow-xl shadow-zinc-200">
+                    <TOC headings={headings} />
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-8">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      {prev ? <PrevNextCard post={prev} direction="prev" /> : <div />}
+      {next ? <PrevNextCard post={next} direction="next" /> : <div />}
+    </div>
+  </section>
+</Layout>
+
+<script>
+    import mediumZoom from 'medium-zoom';
+    const images = Array.from(document.querySelectorAll('.prose img'))
+        .filter(img => !img.closest('.remark-link-card-plus__container'));
+    mediumZoom(images, {
+        background: 'rgba(255, 255, 255, 0.9)',
+    });
+</script>

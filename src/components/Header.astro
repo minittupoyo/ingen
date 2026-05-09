@@ -1,0 +1,77 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<header
+    class="fixed top-0 left-0 z-50 h-20 w-full border-b border-zinc-200 bg-white/50 backdrop-blur-md"
+>
+    <div
+        class="container mx-auto flex h-full w-full max-w-7xl flex-row items-center justify-between px-6"
+    >
+        <a href="/" class="text-2xl font-bold"
+            >minittu<span class="text-orange-500">.</span></a
+        >
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:block">
+            <ul class="flex flex-row items-center space-x-8 font-medium text-zinc-700">
+                <li>
+                    <a href="/about" class="transition-colors hover:text-orange-500">About</a>
+                </li>
+                <li>
+                    <a href="/blog" class="transition-colors hover:text-orange-500">Blog</a>
+                </li>
+                <li>
+                    <a href="/tags" class="transition-colors hover:text-orange-500">Tags</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Mobile Menu Button -->
+        <button
+            id="mobile-menu-button"
+            class="flex items-center justify-center rounded-lg p-2 text-zinc-700 hover:bg-zinc-100 md:hidden"
+            aria-label="Menu"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+        >
+            <Icon name="tabler:menu-2" class="h-6 w-6" id="menu-icon" />
+            <Icon name="tabler:x" class="hidden h-6 w-6" id="close-icon" />
+        </button>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <nav
+        id="mobile-menu"
+        class="hidden border-b border-zinc-200 bg-white px-6 py-8 md:hidden"
+    >
+        <ul class="flex flex-col space-y-6 font-medium text-zinc-700">
+            <li>
+                <a href="/about" class="block text-lg transition-colors hover:text-orange-500">About</a>
+            </li>
+            <li>
+                <a href="/blog" class="block text-lg transition-colors hover:text-orange-500">Blog</a>
+            </li>
+            <li>
+                <a href="/tags" class="block text-lg transition-colors hover:text-orange-500">Tags</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<script>
+    const button = document.getElementById('mobile-menu-button');
+    const menu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+    const closeIcon = document.getElementById('close-icon');
+
+    if (button && menu && menuIcon && closeIcon) {
+        button.addEventListener('click', () => {
+            const isExpanded = button.getAttribute('aria-expanded') === 'true';
+            button.setAttribute('aria-expanded', (!isExpanded).toString());
+            menu.classList.toggle('hidden');
+            menuIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
+        });
+    }
+</script>

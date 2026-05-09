@@ -1,0 +1,51 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
+import { getPosts } from "@/utils/content";
+import BlogPost from "@/components/BlogPost.astro";
+
+const recentPosts = (await getPosts()).slice(0, 6);
+---
+
+<Layout>
+    <section class="py-8">
+        <div
+            class="flex flex-col items-center justify-center space-y-8 rounded-lg border border-zinc-200 py-20 md:py-36 shadow-xl shadow-zinc-200"
+        >
+            <p class="font-medium text-orange-500">[Object, String]</p>
+            <h1 class="text-4xl md:text-6xl font-bold">みにっつ</h1>
+            <p class="text-base md:text-lg font-medium text-zinc-700">超個人的忘備録</p>
+            <div class="flex flex-row items-center space-x-4">
+                <a
+                    href="/blog"
+                    class="rounded-full bg-orange-500 px-6 py-2 text-lg text-white"
+                    >Blog</a
+                >
+                <a href="/about" class="rounded-full px-6 py-2 text-orange-500"
+                    >About</a
+                >
+            </div>
+        </div>
+    </section>
+    <section class="py-16">
+        <div class="flex flex-row items-center justify-between">
+            <h2 class="flex flex-col items-start text-2xl font-bold">
+                最近の投稿<span class="text-sm text-zinc-500">Recent Posts</span
+                >
+            </h2>
+            <a
+                href="/blog"
+                class="group flex flex-row items-center gap-1 text-zinc-700"
+            >
+                すべての記事
+                <Icon
+                    name="tabler:chevron-right"
+                    class="transition duration-150 group-hover:translate-x-1"
+                />
+            </a>
+        </div>
+        <div class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {recentPosts.map((post) => <BlogPost post={post} />)}
+        </div>
+    </section>
+</Layout>

@@ -1,0 +1,12 @@
+{
+    "$schema": "./node_modules/wrangler/config-schema.json",
+    "name": "ingen",
+    "compatibility_date": "2026-05-09",
+    "assets": {
+        "directory": "./dist"
+    },
+    "route": {
+        "pattern": "blog.minittu.net",
+        "custom_domain": true
+    }
+}

@@ -1,0 +1,41 @@
+---
+import { getPosts } from "@/utils/content";
+import Layout from "@/layouts/Layout.astro";
+import BlogPost from "@/components/BlogPost.astro";
+
+export async function getStaticPaths() {
+    const allPosts = await getPosts();
+    const uniqueTags = [...new Set(allPosts.flatMap((post) => post.data.tags))];
+
+    return uniqueTags.map((tag) => {
+        const filteredPosts = allPosts.filter((post) =>
+            post.data.tags.includes(tag),
+        );
+        return {
+            params: { tag },
+            props: { posts: filteredPosts },
+        };
+    });
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<Layout title={`タグ: ${tag}`}>
+    <section class="flex flex-col py-8">
+        <div
+            class="flex flex-col items-center justify-center space-y-4 rounded-xl border border-zinc-200 p-8 py-16 text-center shadow-xl shadow-zinc-200"
+        >
+            <h1 class="text-4xl font-bold">{tag}</h1>
+            <p class="text-lg font-medium text-zinc-700">
+                {posts.length}個の記事があります
+            </p>
+        </div>
+    </section>
+    <section class="flex flex-col py-8">
+        <div class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {posts.map((post) => <BlogPost post={post} />)}
+        </div>
+    </section>
+</Layout>
