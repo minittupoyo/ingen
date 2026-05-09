@@ -9,7 +9,9 @@ const posts = await getPosts();
 <Layout title="すべての記事">
     <section class="py-8">
         <div class="flex flex-col space-y-4">
-            <h2 class="text-2xl font-bold">すべての記事</h2>
+            <h2 class="flex flex-col items-start text-2xl font-bold">
+                すべての記事<span class="text-sm text-zinc-500">All Posts</span>
+            </h2>
             <p class="text-zinc-700">{posts.length}個の記事があります</p>
         </div>
         <div class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">

@@ -10,10 +10,12 @@ const tags = [...new Set(allPosts.flatMap((post) => post.data.tags))]
 
 <Layout title="タグ一覧">
     <section class="flex flex-col py-8">
-        <h2 class="text-2xl font-bold">タグ</h2>
+        <h2 class="flex flex-col items-start text-2xl font-bold">
+            タグ<span class="text-sm text-zinc-500">Tags</span>
+        </h2>
         <div class="flex flex-wrap gap-2 mt-8">
             {tags.map(t => (
-                <a href={`/tags/${encodeURIComponent(t)}`} class="flex flex-row items-center gap-2 px-6 py-2 border shadow shadow-zinc-200 border-zinc-200 rounded-xl">
+                <a href={`/tags/${encodeURIComponent(t)}`} class="flex flex-row items-center gap-2 px-6 py-2 border shadow shadow-zinc-200 border-zinc-200 rounded-lg">
                     <Icon name="tabler:tag" />
                     {t}
                 </a>

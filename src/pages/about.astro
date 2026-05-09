@@ -23,9 +23,11 @@ const { Content, headings } = await render(page)
             ホームに戻る
         </a>
         <div
-            class="flex flex-col items-center justify-center space-y-4 rounded-xl border border-zinc-200 p-8 py-16 text-center shadow-xl shadow-zinc-200"
+            class="flex flex-col items-center justify-center space-y-4 rounded-lg border border-zinc-200 p-8 py-16 text-center shadow-xl shadow-zinc-200"
         >
-            <h1 class="text-4xl font-bold">{page.data.title}</h1>
+            <h1 class="flex flex-col items-center text-4xl font-bold">
+                {page.data.title}<span class="text-sm font-normal text-zinc-500">About</span>
+            </h1>
             <p class="text-lg font-medium text-zinc-700">
                 {page.data.description}
             </p>
@@ -37,7 +39,7 @@ const { Content, headings } = await render(page)
                 <Content />
             </div>
             <div class="hidden md:col-span-4 md:block">
-                <div class="sticky top-24 block p-8 border border-zinc-200 rounded-xl shadow-xl shadow-zinc-200">
+                <div class="sticky top-24 block p-8 border border-zinc-200 rounded-lg shadow-xl shadow-zinc-200">
                     <TOC headings={headings} />
                 </div>
             </div>
