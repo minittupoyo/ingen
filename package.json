@@ -22,7 +22,7 @@
     "@tailwindcss/vite": "^4.2.4",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "astro": "^6.2.2",
+    "astro": "6.3.1",
     "astro-expressive-code": "^0.42.0",
     "astro-icon": "^1.1.5",
     "medium-zoom": "^1.1.0",
@@ -31,6 +31,7 @@
     "remark-breaks": "^4.0.0",
     "remark-link-card-plus": "^0.7.4",
     "tailwindcss": "^4.2.4",
+    "uuid": "^14.0.0",
     "wrangler": "^4.90.0"
   },
   "devDependencies": {

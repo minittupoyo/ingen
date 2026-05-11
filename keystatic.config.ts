@@ -1,4 +1,5 @@
 import { config, fields, collection } from "@keystatic/core";
+import { v4 as uuidv4 } from "uuid";
 
 export default config({
     storage: {
@@ -29,15 +30,15 @@ export default config({
                             directory: 'content/blog/images',
                             publicPath: './images/',
                             transformFilename(originalFilename) {
-                                const date = new Date().toISOString().replace(/[:.]/g, '-');
-                                const random = Math.random().toString(36).substring(2, 7);
-                                return `${date}-${random}-${originalFilename}`;
+                                const random = uuidv4();
+                                const ext = originalFilename.split('.').pop();
+                                return `${random}.${ext}`;
                             },
                         }
                     }
                 })
             },
-            columns: ['title','date']
+            columns: ['title', 'date']
         })
     }
 })
