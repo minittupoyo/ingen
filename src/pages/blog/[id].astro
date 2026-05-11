@@ -20,7 +20,11 @@ const { prev, next } = getPrevNextById(posts, post.id);
 const { Content, headings } = await render(post);
 ---
 
-<Layout title={post.data.title} description={post.data.description} ogType="article">
+<Layout
+    title={post.data.title}
+    description={post.data.description}
+    ogType="article"
+>
     <section class="flex flex-col space-y-8 py-8">
         <a
             href="/"
@@ -30,9 +34,9 @@ const { Content, headings } = await render(post);
             ホームに戻る
         </a>
         <div
-            class="flex flex-col items-center justify-center space-y-4 rounded-lg border border-zinc-200 p-6 py-12 md:p-8 md:py-16 text-center shadow-xl shadow-zinc-200"
+            class="flex flex-col items-center justify-center space-y-4 rounded-lg border border-zinc-200 p-6 py-12 text-center shadow-xl shadow-zinc-200 md:p-8 md:py-16"
         >
-            <p class="text-xs md:text-sm text-zinc-500">
+            <p class="text-xs text-zinc-500 md:text-sm">
                 {
                     post.data.date.toLocaleDateString("ja-jp", {
                         year: "numeric",
@@ -42,8 +46,8 @@ const { Content, headings } = await render(post);
                 }
             </p>
             <p class="text-4xl md:text-5xl">{post.data.emoji}</p>
-            <h1 class="text-2xl md:text-4xl font-bold">{post.data.title}</h1>
-            <p class="text-base md:text-lg font-medium text-zinc-700">
+            <h1 class="text-2xl font-bold md:text-4xl">{post.data.title}</h1>
+            <p class="text-base font-medium text-zinc-700 md:text-lg">
                 {post.data.description}
             </p>
         </div>
@@ -54,25 +58,28 @@ const { Content, headings } = await render(post);
                 <Content />
             </div>
             <div class="hidden md:col-span-4 md:block">
-                <div class="sticky top-24 block p-8 border border-zinc-200 rounded-lg shadow-xl shadow-zinc-200">
+                <div
+                    class="sticky top-24 block rounded-lg border border-zinc-200 p-8 shadow-xl shadow-zinc-200"
+                >
                     <TOC headings={headings} />
                 </div>
             </div>
         </div>
     </section>
     <section class="py-8">
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-      {prev ? <PrevNextCard post={prev} direction="prev" /> : <div />}
-      {next ? <PrevNextCard post={next} direction="next" /> : <div />}
-    </div>
-  </section>
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {prev ? <PrevNextCard post={prev} direction="prev" /> : <div />}
+            {next ? <PrevNextCard post={next} direction="next" /> : <div />}
+        </div>
+    </section>
 </Layout>
 
 <script>
-    import mediumZoom from 'medium-zoom';
-    const images = Array.from(document.querySelectorAll('.prose img'))
-        .filter(img => !img.closest('.remark-link-card-plus__container'));
+    import mediumZoom from "medium-zoom";
+    const images = Array.from(document.querySelectorAll(".prose img")).filter(
+        (img) => !img.closest(".remark-link-card-plus__container"),
+    ) as HTMLElement[];
     mediumZoom(images, {
-        background: 'rgba(255, 255, 255, 0.9)',
+        background: "rgba(255, 255, 255, 0.9)",
     });
 </script>
