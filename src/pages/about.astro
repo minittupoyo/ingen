@@ -48,6 +48,7 @@ const { Content, headings } = await render(page)
 </Layout>
 
 <script>
+    //@ts-nocheck
     import mediumZoom from 'medium-zoom';
     const images = Array.from(document.querySelectorAll('.prose img'))
         .filter(img => !img.closest('.remark-link-card-plus__container'));
